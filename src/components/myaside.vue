@@ -43,7 +43,6 @@
         <!-- /.sidebar-menu -->
       </section>
       <!-- /.sidebar -->
-      <img src="http://localhost:8080/static/img/icon.ico" class="imgset" alt="User Image">
     </aside>
   </div>
 </template>
@@ -84,16 +83,4 @@
     background: #dd4b39;
     border-left-color: #dd4b39;
   }
-
-  html .main-sidebar,
-  .left-side {
-    width: 260px;
-  }
-
-  .imgset {
-    position: fixed;
-    bottom: 30px;
-    left: 0;
-  }
-
 </style>

@@ -1,3 +1,6 @@
 export const isEmpty = (val) => {
-  return val === null ? '無' : val
+  if (val === null || val === '' || val === undefined) {
+    val = '無'
+    return val
+  } else return val
 }

@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MyContent from '../components/mycontent.vue'
-import Member from '../components/mymember.vue'
+import Customer from '../components/customer.vue'
 import MyError from '../components/error.vue'
 import Login from '../components/mylogin.vue'
 import MemberLevel from '../components/myemberlevel.vue'
@@ -27,8 +27,8 @@ const router = new Router({
       component: Login
     },
     {
-      path: '/Member',
-      component: Member,
+      path: '/customer',
+      component: Customer,
       meta: {
         requiresAuth: true
       }

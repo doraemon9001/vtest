@@ -22,12 +22,5 @@
 
 </script>
 <style scoped>
-  html .main-footer {
-    position: fixed;
-    padding: 5px;
-    width: 100%;
-    bottom: 0px;
-    margin: 0;
-  }
 
 </style>

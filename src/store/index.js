@@ -6,7 +6,7 @@ import state from './state'
 import getters from './getters'
 import adminlist from './modules/adminlist'
 import login from './modules/adminLogin'
-import member from './modules/member'
+import customer from './modules/customer'
 import memberlevel from './modules/memberlevel'
 import menuitem from './modules/menuitem'
 import admingroup from './modules/admingroup'
@@ -18,7 +18,7 @@ export default new Vuex.Store({
     login,
     menuitem,
     adminlist,
-    member,
+    customer,
     memberlevel,
     admingroup
   },

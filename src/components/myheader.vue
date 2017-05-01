@@ -6,17 +6,17 @@
       <!-- Logo -->
       <a href="#" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>d</b>h</span>
+        <span class="logo-mini"><b>k</b>p</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>dh</b>Shop</span>
+        <span class="logo-lg"><b>k</b>p</span>
       </a>
 
       <!-- Header Navbar -->
       <nav class="navbar navbar-static-top" role="navigation">
         <!-- Sidebar toggle button-->
-        <!--<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
+        <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button">
           <span class="sr-only">Toggle navigation</span>
-        </a>-->
+        </a>
         <!-- Navbar Right Menu -->
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
@@ -177,10 +177,5 @@
 
 </script>
 <style scopde>
-  html .main-header .logo {
-    width: 280px;
-  }
-  html .main-header .navbar{
-    margin-left: 260px;
-  }
+  
 </style>
