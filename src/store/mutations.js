@@ -7,7 +7,7 @@ export default {
   [types.HideLoading](state) {
     setTimeout(() => {
       state.ShowLoading = false
-    }, 1000)
+    }, 500)
   },
   [types.ShowDiv](state) {
     state.isAdd = true

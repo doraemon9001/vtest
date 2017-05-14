@@ -7,6 +7,12 @@ import Login from '../components/mylogin.vue'
 import MemberLevel from '../components/myemberlevel.vue'
 import AdminList from '../components/myadminlist.vue'
 import AdminGroup from '../components/myadmingroup.vue'
+import Company from '../components/company.vue'
+import Employee from '../components/employee.vue'
+import Sale from '../components/sale.vue'
+import SaleReturn from '../components/salereturn.vue'
+import CustQty from '../components/custqty.vue'
+import Supplier from '../components/Supplier.vue'
 import state from '../store/state'
 
 Vue.use(Router)
@@ -29,6 +35,48 @@ const router = new Router({
     {
       path: '/customer',
       component: Customer,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Sale',
+      component: Sale,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/SaleReturn',
+      component: SaleReturn,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Supplier',
+      component: Supplier,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/CustQty',
+      component: CustQty,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/employee',
+      component: Employee,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/company',
+      component: Company,
       meta: {
         requiresAuth: true
       }

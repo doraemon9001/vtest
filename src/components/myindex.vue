@@ -1,7 +1,6 @@
 <template>
-  <div >
+  <div>
     <transition name="slide">
-      <router-view></router-view>
     </transition>
   </div>
 </template>
@@ -12,6 +11,6 @@
   .slide-enter,
   .slide-leave-to {
     display: none;
-    opacity: .3;
+    opacity: .7;
   }
 </style>

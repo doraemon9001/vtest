@@ -2,8 +2,10 @@
   <div id="app">
     <template v-if="auth">
       <MyHeader />
-      <MyAside />
-      <MyIndex />
+      <div id="divContent">
+        <MyAside />
+        <router-view></router-view>
+      </div>
       <MyFooter/>
     </template>
     <template v-else>
@@ -49,5 +51,10 @@
     text-align: center;
     color: #2c3e50;
   }
-
+  #divContent {
+    position: relative;
+  }
+ #divContent > .main-sidebar {
+   color: #ffffff;
+ }
 </style>

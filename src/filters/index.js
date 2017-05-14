@@ -1,5 +1,6 @@
 import { timeFormat } from './timeFormat.js'
-import { valMultiplyn } from './addDollar.js'
+import { anchorHash } from './anchorHash.js'
 import { isEmpty } from './isEmpty'
+import { decimalComma } from './decimalComma'
 
-export default { timeFormat, valMultiplyn, isEmpty }
+export default { timeFormat, anchorHash, isEmpty, decimalComma }

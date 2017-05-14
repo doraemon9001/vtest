@@ -3,7 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-import Loading from './components/Loading'
+import extension from './components/extension'
 import store from './store'
 import filters from './filters'
 import axios from 'axios'
@@ -20,9 +20,8 @@ Vue.use(VeeValidate, {
   locale: 'zh_TW',
   strict: true
 })
-
 Vue.config.productionTip = false
-Vue.use(Loading)
+Vue.use(extension)
 
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
@@ -43,12 +42,6 @@ axios.interceptors.response.use(function (response) {
   return Promise.reject(error)
 })
 
-axios({
-  method: 'get',
-  url: `/api/Customer/Get`
-}).then(model => {
-  console.log(model.data)
-})
 Vue.prototype.$http = axios
 
 /* eslint-disable no-new */

@@ -1,9 +1,8 @@
 <template>
-  <div class="divaside">
     <!-- Left side column. contains the logo and sidebar -->
-    <aside class="main-sidebar">
+    <aside class="main-sidebar" v-show="!ShowLoading" >
       <!-- sidebar: style can be found in sidebar.less -->
-      <section class="sidebar">
+      <section class="sidebar" style="height: auto;">
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel">
           <div class="pull-left ">
@@ -44,15 +43,18 @@
       </section>
       <!-- /.sidebar -->
     </aside>
-  </div>
 </template>
 <script>
   import {
     mapGetters,
-    mapActions
+    mapActions,
+    mapState
   } from 'vuex'
   export default {
     computed: {
+      ...mapState([
+        'ShowLoading'
+      ]),
       ...mapGetters([
         'GetMetuItem'
       ])
