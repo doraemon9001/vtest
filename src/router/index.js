@@ -13,6 +13,9 @@ import Sale from '../components/sale.vue'
 import SaleReturn from '../components/salereturn.vue'
 import CustQty from '../components/custqty.vue'
 import Supplier from '../components/Supplier.vue'
+import Request from '../components/request.vue'
+import Rece from '../components/rece.vue'
+import Pay from '../components/pay.vue'
 import state from '../store/state'
 
 Vue.use(Router)
@@ -49,6 +52,27 @@ const router = new Router({
     {
       path: '/SaleReturn',
       component: SaleReturn,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Request',
+      component: Request,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Rece',
+      component: Rece,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Pay',
+      component: Pay,
       meta: {
         requiresAuth: true
       }

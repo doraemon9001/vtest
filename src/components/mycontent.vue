@@ -19,23 +19,35 @@
       <h2>Hello World!</h2>
       <div class="nav-tabs-custom">
         <ul class="nav nav-tabs">
-          <li class=""><a href="#tab_1" data-toggle="tab" aria-expanded="false">Tab 1</a></li>
-          <li class=""><a href="#tab_2" data-toggle="tab" aria-expanded="false">Tab 2</a></li>
-          <li class="active"><a href="#tab_3" data-toggle="tab" aria-expanded="true">Tab 3</a></li>
+          <li class="active"><a href="#tab_1" data-toggle="tab" aria-expanded="true">Tab 1</a></li>
+          <li><a href="#tab_2" data-toggle="tab" aria-expanded="false">Tab 2</a></li>
+          <li><a href="#tab_3" data-toggle="tab" aria-expanded="false">Tab 3</a></li>
         </ul>
         <div class="tab-content">
-          <div class="tab-pane" id="tab_1">
-            <b>How to use:</b>
+          <div class="tab-pane active" id="tab_1">
+            <div class="input-group">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-danger">廠商編號</button>
+              </div>
+              <input class="form-control" name="廠商編號"  type="text" placeholder="請輸入廠商編號">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-danger">廠商名稱</button>
+              </div>
+              <input class="form-control" name="廠商名稱" type="text" placeholder="請輸入廠商名稱">
+              <div class="input-group-btn">
+                <button type="button" class="btn btn-danger">廠商簡稱</button>
+              </div>
+              <input class="form-control" name="廠商簡稱" type="text" placeholder="請輸入廠商簡稱">
+            </div>
           </div>
           <div class="tab-pane" id="tab_2">
             The European languages are members of the same family.
           </div>
-          <div class="tab-pane active" id="tab_3">
+          <div class="tab-pane" id="tab_3">
             Lorem Ipsum is simply dummy text of the printing and typesetting industry.
           </div>
         </div>
       </div>
-
       <a class="btn btn-app">
         <i class="fa fa-edit"></i> 編輯
       </a>

@@ -148,7 +148,17 @@ const mutations = {
         state.SupplierList = model.data
         break
       case 'err':
-        alert(model.msg)
+        new Noty({
+          type: 'warning',
+          layout: 'topRight',
+          theme: 'metroui',
+          animation: {
+            open: 'noty_effects_open',
+            close: 'noty_effects_close'
+          },
+          timeout: 3000,
+          text: `<div style="width:500px">${model.msg}</div>`
+        }).show()
         break
     }
   },
