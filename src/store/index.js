@@ -19,6 +19,8 @@ import header from './modules/header'
 import request from './modules/request'
 import rece from './modules/rece'
 import pay from './modules/pay'
+import stock from './modules/stock'
+import stockreturn from './modules/stockreturn'
 
 Vue.use(Vuex)
 
@@ -35,6 +37,8 @@ export default new Vuex.Store({
     request,
     rece,
     pay,
+    stock,
+    stockreturn,
     menuitem,
     adminlist,
     customer,
