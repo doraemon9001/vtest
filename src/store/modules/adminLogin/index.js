@@ -26,8 +26,9 @@ const mutations = {
   [types.AuthLogin](state, { model, rootState }) {
     switch (model.statu) {
       case 'ok':
-        rootState.antiKey = model.data
         state.auth = true
+        window.Lockr.set('auth', true)
+        window.Lockr.set('antiKey', model.data)
         break
       case 'err':
         alert(model.msg)

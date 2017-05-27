@@ -17,7 +17,6 @@
 <script>
   import MyHeader from './components/myheader'
   import MyFooter from './components/myfooter'
-  import MyIndex from './components/myindex'
   import MyAside from './components/myaside'
   import {
     mapState
@@ -29,10 +28,14 @@
     //     // this.$route.push('index')
     //   }
     // },
+    created () {
+      if(this.testLockrAuth) {
+        this.$state.login.auth = true
+      }
+    },
     components: {
       MyHeader,
       MyFooter,
-      MyIndex,
       MyAside
     },
     computed: {

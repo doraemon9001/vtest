@@ -24,12 +24,11 @@
 </template>
 <script>
   import {
-    mapActions,
-    mapState
+    mapActions
   } from 'vuex'
   export default {
     created() {
-      if(this.auth) this.$router.push('/index')
+      if(window.Lockr.get('auth')) this.$router.push('/index')
       else console.log('not auth')
     },
     data() {
@@ -39,11 +38,6 @@
           AccountPasswordStr: '1234'
         }
       }
-    },
-    computed: {
-      ...mapState({
-        auth: state => state.login.auth
-      })
     },
     methods: {
       ...mapActions([

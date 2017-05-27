@@ -1,11 +1,10 @@
 <template>
-  <div class="zoomIn animated">
+  <div class="zoomIn animated" :class="{modalTop:isAdd}">
     <loading v-show="ShowLoading" />
     <!-- Page content start-->
     <div class="content-wrapper" v-show="!ShowLoading">
       <!-- Content Header (Page header) -->
-      <div class="myModal" v-show="isAdd">
-      </div>
+      <SaleReturnForm :isAdd='isAdd' :HideDiv="HideDiv" />
       <!-- Main content start-->
       <div class="content">
         <!--table start-->
@@ -14,10 +13,10 @@
             <div class="box-header">
               <h3>銷貨退回 <button @click="add()" class="btn btn-info pull-right">新增</button></h3>
             </div>
-            <div class="box-body" >
+            <div class="box-body">
               <div class="box-group" id="accordion">
-                <div class="panel box box-primary" style="overflow:auto" v-for="(sale,index) in GetSaleReturnList" >
-                  <div class="box-header with-border"style="min-width:3500px">
+                <div class="panel box box-primary" style="overflow:auto" v-for="(sale,index) in GetSaleReturnList">
+                  <div class="box-header with-border" style="min-width:3500px">
                     <h4 class="pull-left">詳細資料<i class="fa fa-arrow-circle-down"></i></h4>
                     <table class="table table-striped table-hover" data-parent="#accordion" :href="index|anchorHash">
                       <tbody>
@@ -71,7 +70,12 @@
                           <th>訂單編號</th>
                         </tr>
                         <tr>
-                          <td><i class="fa fa-refresh"></i></td>
+                          <td>
+                            <div class="btn-group">
+                              <button @click="get(sale.單據編號)" class="btn bg-orange btn-flat" type="button">修改</button>
+                              <button @click="del(sale.單據編號)" class="btn bg-maroon btn-flat" type="button">刪除</button>
+                            </div>
+                          </td>
                           <td>{{sale.單據日期}}</td>
                           <td>{{sale.類別}}</td>
                           <td>{{sale.單據編號}}</td>
@@ -121,14 +125,14 @@
                     </table>
                   </div>
                   <div :id="index" class="panel-collapse collapse" style="min-width:3500px">
-                    <template v-if="GetSaleReturnDtList.length > 0" >
-                      <div class="box-body" :id="index" >
+                    <template v-if="GetSaleReturnDtList.length > 0">
+                      <div class="box-body" :id="index">
                         <h4 class="pull-left">詳細資料<i class="fa fa-arrow-circle-down"></i></h4>
-                        <table class="table table-striped table-hover"  >
+                        <table class="table table-striped table-hover">
                           <tbody>
                             <tr>
                               <th>
-                                <a :href="index|anchorHash" data-toggle="collapse" >關閉</a>
+                                <a :href="index|anchorHash" data-toggle="collapse">關閉</a>
                               </th>
                               <th>單據日期</th>
                               <th>單據編號</th>
@@ -241,199 +245,161 @@
   </div>
 </template>
 <script>
-  import {
-    mapActions,
-    mapGetters,
-    mapState
-  } from 'vuex'
-  import Noty from 'noty'
-  export default {
-    data() {
-      return {
-        tcur: 1,
-        tall: 0,
-        saleAdd: false,
-        headerIndex: 0
-      }
-    },
-    created() {
-      this.getPageData(1)
-      setTimeout(() => {
-        this.tall = this.GetSaleReturnPageCount
-      }, 2000)
-    },
-    computed: {
-      ...mapState([
-        'ShowLoading',
-        'isAdd'
-      ]),
-      ...mapGetters([
-        'GetSaleReturnList',
-        'GetSaleReturnDtList',
-        'GetSaleReturn',
-        'GetSaleReturnPageCount'
-      ])
-    },
-    methods: {
-      ...mapActions([
-        'SaleReturnList',
-        'SaleReturnDtList',
-        'SaleReturnAddGet',
-        'SaleReturnAddPost',
-        'SaleReturnEditGet',
-        'SaleReturnEditPut',
-        'SaleReturnDelete',
-        'ShowDiv',
-        'HideDiv'
-      ]),
-      getPageData(page) {
-        this.SaleReturnList({
-          http: this.$http,
-          model: {
-            PageIndex: page,
-            PageSize: 5
-          }
-        })
-      },
-      getdt(id) {
-        this.SaleReturnDtList({
-          http: this.$http,
-          id
-        })
-      },
-      get(id) {
-        let self = this
-        let n = new Noty({
-          layout: 'topCenter',
-          theme: 'metroui',
-          closeWith: ['butto'],
-          text: `
-            <div style="width:200px;">
-              <div style="margin:20px;width:200px;"><h3>是否確定要修改?</h3></div>
-            </div>
-          `,
-          buttons: [
-            Noty.button('YES', 'btn btn-success', function () {
-              self.saleAdd = false
-              self.SaleReturnEditGet({
-                http: self.$http,
-                id
-              })
-              self.ShowDiv()
-              n.close()
-            }),
-            Noty.button('NO', 'btn btn-danger', function () {
-              this.saleAdd = false
-              n.close()
-            })
-          ]
-        }).show()
-      },
-      del(id) {
-        let self = this
-        let n = new Noty({
-          layout: 'topCenter',
-          theme: 'metroui',
-          closeWith: ['butto'],
-          text: `
-            <div style="width:200px;">
-              <div style="margin:20px;width:200px;"><h3>是否確定要刪除?</h3></div>
-            </div>
-          `,
-          buttons: [
-            Noty.button('YES', 'btn btn-success', function () {
-              self.SaleReturnDelete({
-                http: self.$http,
-                id: id
-              })
-              n.close()
-            }),
-            Noty.button('NO', 'btn btn-danger', function () {
-              n.close()
-            })
-          ]
-        }).show()
-      },
-      add() {
-        this.saleAdd = true
-        this.SaleReturnAddGet(this.$http)
-        this.ShowDiv()
-      },
-      doMethods(model) {
-        if (!this.saleAdd) {
-          this.SaleReturnEditPut({
-            http: this.$http,
-            model: model
-          })
-        } else {
-          this.SaleReturnAddPost({
-            http: this.$http,
-            model: model
-          })
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
+import {
+  noty
+} from '../assets/commons.js'
+import SaleReturnForm from '../components/form/salereturnform.vue'
+export default {
+  data() {
+    return {
+      tcur: 1,
+      tall: 0,
+      saleAdd: false,
+      headerIndex: 0
+    }
+  },
+  created() {
+    this.getPageData(1)
+    setTimeout(() => {
+      this.tall = this.GetSaleReturnPageCount
+    }, 2000)
+  },
+  components: {
+    SaleReturnForm
+  },
+  computed: {
+    ...mapState([
+      'ShowLoading',
+      'isAdd'
+    ]),
+    ...mapGetters([
+      'GetSaleReturnList',
+      'GetSaleReturnDtList',
+      'GetSaleReturnPageCount'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'SaleReturnList',
+      'SaleReturnDtList',
+      'SaleReturnAddGet',
+      'SaleReturnEditGet',
+      'SaleReturnDelete',
+      'ShowDiv',
+      'HideDiv'
+    ]),
+    /* 獲取分頁資料 */
+    getPageData(page) {
+      this.SaleReturnList({
+        http: this.$http,
+        model: {
+          PageIndex: page,
+          PageSize: 5
         }
-      }
+      })
+    },
+    /* 獲取單身資料 */
+    getdt(id) {
+      this.SaleReturnDtList({
+        http: this.$http,
+        id
+      })
+    },
+    /* 修改按鈕 */
+    get(id) {
+      this.SaleReturnEditGet({
+        http: this.$http,
+        id
+      })
+      this.ShowDiv()
+    },
+    /* 刪除按鈕 */
+    del(id) {
+      noty.Show('是否確定要刪除?', () => {
+        this.SaleReturnDelete({
+          http: this.$http,
+          id: id
+        })
+      })
+    },
+    /* 新增按鈕 */
+    add() {
+      this.isAdd = true
+      this.SaleReturnAddGet()
+      this.ShowDiv()
     }
   }
+}
 
 </script>
 <style scoped>
-  .margincenter {
-    width: 350px;
-    text-align: left;
-    margin: 0px auto;
-    font-size: 16px;
-  }
+.modalTop {
+  position: relative;
+  z-index: 999
+}
 
-  .myModal {
-    position: fixed;
-    /* Stay in place */
-    z-index: 778;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-  }
+.margincenter {
+  width: 350px;
+  text-align: left;
+  margin: 0px auto;
+  font-size: 16px;
+}
 
-  .box-margin-left {
-    margin-left: 10px;
-  }
+.myModal {
+  position: fixed;
+  /* Stay in place */
+  z-index: 778;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
 
-  .help {
-    display: block;
-    font-size: 11px;
-    margin-top: 5px;
-  }
+.box-margin-left {
+  margin-left: 10px;
+}
 
-  .help.is-danger {
-    background-color: #ff3860;
-    font-size: 18px;
-    font-weight: bold;
-    color: #34495e;
-    font-family: '微軟正黑體';
-  }
+.help {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+}
 
-  .input.is-danger,
-  .textarea.is-danger {
-    border: 1px solid #ff3860;
-  }
+.help.is-danger {
+  background-color: #ff3860;
+  font-size: 18px;
+  font-weight: bold;
+  color: #34495e;
+  font-family: '微軟正黑體';
+}
 
-  .even {
-    --background-color: #95da8b;
-  }
+.input.is-danger,
+.textarea.is-danger {
+  border: 1px solid #ff3860;
+}
 
-  .box-body {
-    --overflow: auto;
-  }
+.even {
+  --background-color: #95da8b;
+}
+
+.box-body {
+  --overflow: auto;
+}
 
 </style>

@@ -9,5 +9,10 @@ export default {
   GetSaleList: 'GetSaleList',
   GetSaleDtList: 'GetSaleDtList',
   GetSale: 'GetSale',
-  GetSalePageCount: 'GetSalePageCount'
+  GetSaledt: 'GetSaledt',
+  GetSalePageCount: 'GetSalePageCount',
+  SaledtAddGet: 'SaledtAddGet',
+  SaledtAddPost: 'SaledtAddPost',
+  SaledtEditGet: 'SaledtEditGet',
+  SaledtDelete: 'SaledtDelete'
 }

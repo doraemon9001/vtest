@@ -9,5 +9,10 @@ export default {
   GetSaleReturnList: 'GetSaleReturnList',
   GetSaleReturnDtList: 'GetSaleReturnDtList',
   GetSaleReturn: 'GetSaleReturn',
-  GetSaleReturnPageCount: 'GetSaleReturnPageCount'
+  GetSaleReturndt: 'GetSaleReturndt',
+  GetSaleReturnPageCount: 'GetSaleReturnPageCount',
+  SaleReturndtAddGet: 'SaleReturndtAddGet',
+  SaleReturndtAddPost: 'SaleReturndtAddPost',
+  SaleReturndtEditGet: 'SaleReturndtEditGet',
+  SaleReturndtDelete: 'SaleReturndtDelete'
 }

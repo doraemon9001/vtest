@@ -18,13 +18,13 @@ import Rece from '../components/rece.vue'
 import Pay from '../components/pay.vue'
 import Stock from '../components/stock.vue'
 import StockReturn from '../components/stockreturn.vue'
-import state from '../store/state'
+// import state from '../store/state'
 
 Vue.use(Router)
 
 const router = new Router({
   mode: 'history',
-  scrollBehavior: () => ({y: 0}),
+  scrollBehavior: () => ({x: 0, y: 0}),
   routes: [
     {
       path: '/index',
@@ -153,8 +153,8 @@ const router = new Router({
 })
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
-    if (!state.login.auth) {
-      alert('請先登入')
+    if (!window.Lockr.get('auth')) {
+      alert('請先登入router')
       next({
         path: '/Login'
       })

@@ -1,11 +1,9 @@
 <template>
   <div>
-    <transition name="slide">
-    </transition>
   </div>
 </template>
 <script>
-  export default {}
+  export default { }
 </script>
 <style scoped>
   .slide-enter,

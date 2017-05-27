@@ -16,10 +16,11 @@ const getters = {
 
 // actions
 const actions = {
-  [types.MetuItem]({ commit }, { http }) {
+  [types.MetuItem]({ commit, rootState }, { http }) {
     http({
       method: 'get',
-      url: `/api/Menu/Get`
+      url: `/api/Menu/Get`,
+      headers: {'X-XSRF-Token': window.Lockr.get('antiKey')}
     }).then(model => {
       commit(types.MetuItem, { model: model.data })
     })
