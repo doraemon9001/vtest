@@ -4,13 +4,15 @@ import Noty from 'noty'
 const state = {
   CustQtyList: [],
   CustQtyDtList: [],
-  CustQty: {}
+  CustQty: {},
+  CustQtyPageCount: 0
 }
 
 const getters = {
   [types.GetCustQtyList]: (state) => state.CustQtyList,
   [types.GetCustQtyDtList]: (state) => state.CustQtyDtList,
-  [types.GetCustQty]: (state) => state.CustQty
+  [types.GetCustQty]: (state) => state.CustQty,
+  [types.GetCustQtyPageCount]: (state) => state.CustQtyPageCount
 }
 
 const actions = {
@@ -74,7 +76,8 @@ const mutations = {
   [types.CustQtyList](state, model) {
     switch (model.statu) {
       case 'ok':
-        state.CustQtyList = model.data
+        state.CustQtyList = model.data.list
+        state.CustQtyPageCount = model.data.PageCount
         return state.CustQtyList
       case 'err':
         alert(model.msg)

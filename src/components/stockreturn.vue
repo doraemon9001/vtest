@@ -1,11 +1,10 @@
 <template>
-  <div class="zoomIn animated">
+  <div class="zoomIn animated" :class="{modalTop:isAdd}">
     <loading v-show="ShowLoading" />
     <!-- Page content start-->
     <div class="content-wrapper" v-show="!ShowLoading">
       <!-- Content Header (Page header) -->
-      <div class="myModal" v-show="isAdd">
-      </div>
+      <StockReturnForm :isAdd='isAdd' :HideDiv="HideDiv" />
       <!-- Main content start-->
       <div class="content">
         <!--table start-->
@@ -14,11 +13,11 @@
             <div class="box-header">
               <h3>進貨退出單 <button @click="add()" class="btn btn-info pull-right">新增</button></h3>
             </div>
-            <div class="box-body" >
+            <div class="box-body">
               <div class="box-group" id="accordion">
-                <div class="panel box box-primary" style="overflow:auto" v-for="(stock,index) in GetStockReturnList" >
-                  <div class="box-header with-border"style="min-width:3500px">
-                        <h4 class="pull-left">詳細資料<i class="fa fa-arrow-circle-down"></i></h4>
+                <div class="panel box box-primary" style="overflow:auto" v-for="(stock,index) in GetStockReturnList">
+                  <div class="box-header with-border" style="min-width:3500px">
+                    <h4 class="pull-left">詳細資料<i class="fa fa-arrow-circle-down"></i></h4>
                     <table class="table table-striped table-hover" data-parent="#accordion" :href="index|anchorHash">
                       <tbody>
                         <tr>
@@ -61,7 +60,12 @@
                           <th>異動時間</th>
                         </tr>
                         <tr>
-                          <td><i class="fa fa-refresh"></i></td>
+                          <td>
+                            <div class="btn-group">
+                              <button @click="get(stock.單據編號)" class="btn bg-orange btn-flat" type="button">修改</button>
+                              <button @click="del(stock.單據編號)" class="btn bg-maroon btn-flat" type="button">刪除</button>
+                            </div>
+                          </td>
                           <td>{{stock.單據日期}}</td>
                           <td>{{stock.類別}}</td>
                           <td>{{stock.單據編號}}</td>
@@ -101,14 +105,14 @@
                     </table>
                   </div>
                   <div :id="index" class="panel-collapse collapse" style="min-width:3500px">
-                    <template v-if="GetStockReturnDtList.length > 0" >
-                      <div class="box-body" :id="index" >
+                    <template v-if="GetStockReturnDtList.length > 0">
+                      <div class="box-body" :id="index">
                         <h4 class="pull-left">詳細資料<i class="fa fa-arrow-circle-down"></i></h4>
-                        <table class="table table-striped table-hover"  >
+                        <table class="table table-striped table-hover">
                           <tbody>
                             <tr>
                               <th>
-                                <a :href="index|anchorHash" data-toggle="collapse" >關閉</a>
+                                <a :href="index|anchorHash" data-toggle="collapse">關閉</a>
                               </th>
                               <th>識別碼</th>
                               <th>單據日期</th>
@@ -197,198 +201,157 @@
   </div>
 </template>
 <script>
-  import {
-    mapActions,
-    mapGetters,
-    mapState
-  } from 'vuex'
-  import Noty from 'noty'
-  export default {
-    data() {
-      return {
-        tcur: 1,
-        tall: 0,
-        StockReturnAdd: false
-      }
-    },
-    created() {
-      this.getPageData(1)
-      setTimeout(() => {
-        this.tall = this.GetStockReturnPageCount
-      }, 2000)
-    },
-    computed: {
-      ...mapState([
-        'ShowLoading',
-        'isAdd'
-      ]),
-      ...mapGetters([
-        'GetStockReturnList',
-        'GetStockReturnDtList',
-        'GetStockReturn',
-        'GetStockReturnPageCount'
-      ])
-    },
-    methods: {
-      ...mapActions([
-        'StockReturnList',
-        'StockReturnDtList',
-        'StockReturnAddGet',
-        'StockReturnAddPost',
-        'StockReturnEditGet',
-        'StockReturnEditPut',
-        'StockReturnDelete',
-        'ShowDiv',
-        'HideDiv'
-      ]),
-      getPageData(page) {
-        this.StockReturnList({
-          http: this.$http,
-          model: {
-            PageIndex: page,
-            PageSize: 5
-          }
-        })
-      },
-      getdt(id) {
-        this.StockReturnDtList({
-          http: this.$http,
-          id
-        })
-      },
-      get(id) {
-        let self = this
-        let n = new Noty({
-          layout: 'topCenter',
-          theme: 'metroui',
-          closeWith: ['butto'],
-          text: `
-            <div style="width:200px;">
-              <div style="margin:20px;width:200px;"><h3>是否確定要修改?</h3></div>
-            </div>
-          `,
-          buttons: [
-            Noty.button('YES', 'btn btn-success', function () {
-              self.StockReturnAdd = false
-              self.StockReturnEditGet({
-                http: self.$http,
-                id
-              })
-              self.ShowDiv()
-              n.close()
-            }),
-            Noty.button('NO', 'btn btn-danger', function () {
-              this.StockReturnAdd = false
-              n.close()
-            })
-          ]
-        }).show()
-      },
-      del(id) {
-        let self = this
-        let n = new Noty({
-          layout: 'topCenter',
-          theme: 'metroui',
-          closeWith: ['butto'],
-          text: `
-            <div style="width:200px;">
-              <div style="margin:20px;width:200px;"><h3>是否確定要刪除?</h3></div>
-            </div>
-          `,
-          buttons: [
-            Noty.button('YES', 'btn btn-success', function () {
-              self.StockReturnDelete({
-                http: self.$http,
-                id: id
-              })
-              n.close()
-            }),
-            Noty.button('NO', 'btn btn-danger', function () {
-              n.close()
-            })
-          ]
-        }).show()
-      },
-      add() {
-        this.StockReturnAdd = true
-        this.StockReturnAddGet(this.$http)
-        this.ShowDiv()
-      },
-      doMethods(model) {
-        if (!this.StockReturnAdd) {
-          this.StockReturnEditPut({
-            http: this.$http,
-            model: model
-          })
-        } else {
-          this.StockReturnAddPost({
-            http: this.$http,
-            model: model
-          })
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
+import {
+  noty
+} from '../assets/commons.js'
+import StockReturnForm from '../components/form/stockreturnform'
+export default {
+  data() {
+    return {
+      tcur: 1,
+      tall: 0,
+      StockReturnAdd: false
+    }
+  },
+  components: {
+    StockReturnForm
+  },
+  created() {
+    this.getPageData(1)
+    setTimeout(() => {
+      this.tall = this.GetStockReturnPageCount
+    }, 2000)
+  },
+  computed: {
+    ...mapState([
+      'ShowLoading',
+      'isAdd'
+    ]),
+    ...mapGetters([
+      'GetStockReturnList',
+      'GetStockReturnDtList',
+      'GetStockReturn',
+      'GetStockReturnPageCount'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'StockReturnList',
+      'StockReturnDtList',
+      'StockReturnAddGet',
+      'StockReturnEditGet',
+      'StockReturnDelete',
+      'ShowDiv',
+      'HideDiv'
+    ]),
+    getPageData(page) {
+      this.StockReturnList({
+        http: this.$http,
+        model: {
+          PageIndex: page,
+          PageSize: 5
         }
-      }
+      })
+    },
+    getdt(id) {
+      this.StockReturnDtList({
+        http: this.$http,
+        id
+      })
+    },
+    get(id) {
+      this.StockReturnAdd = false
+      this.StockReturnEditGet({
+        http: this.$http,
+        id
+      })
+      this.ShowDiv()
+    },
+    del(id) {
+      noty.Show('是否確定要刪除?', () => {
+        this.StockReturnDelete({
+          http: this.$http,
+          id: id
+        })
+      })
+    },
+    add() {
+      this.StockReturnAdd = true
+      this.StockReturnAddGet(this.$http)
+      this.ShowDiv()
     }
   }
+}
 
 </script>
 <style scoped>
-  .margincenter {
-    width: 350px;
-    text-align: left;
-    margin: 0px auto;
-    font-size: 16px;
-  }
+.modalTop {
+  position: relative;
+  z-index: 999
+}
 
-  .myModal {
-    position: fixed;
-    /* Stay in place */
-    z-index: 778;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-  }
+.margincenter {
+  width: 350px;
+  text-align: left;
+  margin: 0px auto;
+  font-size: 16px;
+}
 
-  .box-margin-left {
-    margin-left: 10px;
-  }
+.myModal {
+  position: fixed;
+  /* Stay in place */
+  z-index: 778;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
 
-  .help {
-    display: block;
-    font-size: 11px;
-    margin-top: 5px;
-  }
+.box-margin-left {
+  margin-left: 10px;
+}
 
-  .help.is-danger {
-    background-color: #ff3860;
-    font-size: 18px;
-    font-weight: bold;
-    color: #34495e;
-    font-family: '微軟正黑體';
-  }
+.help {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+}
 
-  .input.is-danger,
-  .textarea.is-danger {
-    border: 1px solid #ff3860;
-  }
+.help.is-danger {
+  background-color: #ff3860;
+  font-size: 18px;
+  font-weight: bold;
+  color: #34495e;
+  font-family: '微軟正黑體';
+}
 
-  .even {
-    --background-color: #95da8b;
-  }
+.input.is-danger,
+.textarea.is-danger {
+  border: 1px solid #ff3860;
+}
 
-  .box-body {
-    --overflow: auto;
-  }
+.even {
+  --background-color: #95da8b;
+}
+
+.box-body {
+  --overflow: auto;
+}
 
 </style>

@@ -10,11 +10,15 @@ import filters from './filters'
 import Lockr from 'lockr'
 import axios from 'axios'
 import tw from 'vee-validate/dist/locale/zh_TW'
-import VeeValidate, { Validator } from 'vee-validate'
+import VeeValidate, {
+  Validator
+} from 'vee-validate'
 
 Validator.addLocale(tw)
 Validator.updateDictionary({
-  zh_TW: { tw }
+  zh_TW: {
+    tw
+  }
 })
 
 Vue.use(VeeValidate, {
@@ -28,18 +32,18 @@ Vue.use(extension)
 
 Object.keys(filters).forEach(key => Vue.filter(key, filters[key]))
 
-axios.interceptors.request.use(function (config) {
+axios.interceptors.request.use(function(config) {
   axios.defaults.headers['X-XSRF-Token'] = Lockr.get('antiKey')
   store.dispatch('ShowLoading')
   return config
-}, function (error) {
+}, function(error) {
   return Promise.reject(error)
 })
 
-axios.interceptors.response.use(function (response) {
+axios.interceptors.response.use(function(response) {
   store.dispatch('HideLoading')
   return response
-}, function (error) {
+}, function(error) {
   Lockr.rm('auth')
   alert('請先登入!')
   store.state.login.auth = false
@@ -54,16 +58,13 @@ new Vue({
   el: '#app',
   created() {
     if (Lockr.get('auth')) {
-      /** 重新整理 */
+      /* 判斷重新整理 */
       this.$store.state.login.auth = true
       axios.defaults.headers['X-XSRF-Token'] = Lockr.get('antiKey')
     } else {
       Lockr.rm('antiKey')
       Lockr.rm('auth')
     }
-  },
-  beforeDestroy() {
-    alert(1)
   },
   router,
   store,

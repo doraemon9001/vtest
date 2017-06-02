@@ -1,10 +1,11 @@
 import types from './stockTypes'
-import Noty from 'noty'
+import { noty } from '../../../assets/commons'
 
 const state = {
   StockList: [],
   StockDtList: [],
   Stock: {},
+  StockDt: {},
   StockPageCount: 0
 }
 
@@ -12,6 +13,7 @@ const getters = {
   [types.GetStockList]: (state) => state.StockList,
   [types.GetStockDtList]: (state) => state.StockDtList,
   [types.GetStock]: (state) => state.Stock,
+  [types.GetStockdt]: (state) => state.StockDt,
   [types.GetStockPageCount]: (state) => state.StockPageCount
 }
 
@@ -41,11 +43,14 @@ const actions = {
       commit(types.StockEditGet, model.data)
     })
   },
-  [types.StockEditPut]({ commit, rootState }, { http, model }) {
+  [types.StockEditPut]({ commit, rootState }, { http, model, dtModel }) {
     http({
       method: 'put',
       url: `/api/Stock/Put/${model.員工編號}`,
-      data: model
+      data: {
+        Stock: model,
+        Stockdts: dtModel
+      }
     }).then(emp => {
       commit(types.StockEditPut, { model: emp.data, rootState })
     })
@@ -68,6 +73,25 @@ const actions = {
       url: `/api/Stock/delete/${id}`
     }).then(model => {
       commit(types.StockDelete, model.data)
+    })
+  },
+  [types.StockdtAddGet]({ commit }) {
+    commit(types.StockdtAddGet)
+  },
+  [types.StockdtEditGet]({ commit }, index) {
+    state.StockDt = state.StockDtList[index]
+    commit(types.StockdtEditGet)
+  },
+  [types.StockdtDelete]({ commit }, { http, formId, indexId }) {
+    http({
+      method: 'delete',
+      url: `/api/Stock/DeleteDt/${indexId}`,
+      data: {
+        單據編號: formId,
+        識別碼: indexId
+      }
+    }).then(model => {
+      commit(types.StockdtDelete, model.data)
     })
   }
 }
@@ -97,8 +121,9 @@ const mutations = {
   [types.StockEditGet](state, model) {
     switch (model.statu) {
       case 'ok':
-        state.Stock = model.data
-        return state.Stock
+        state.Stock = model.data.stock
+        state.StockDtList = model.data.stockDt
+        break
       case 'err':
         alert(model.msg)
         break
@@ -107,19 +132,9 @@ const mutations = {
   [types.StockEditPut](state, { model, rootState }) {
     switch (model.statu) {
       case 'ok':
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>修改成功!</h4>'
-        }).show()
+        noty.TopRightShow('修改成功!')
         rootState.isAdd = false
-        state.StockList = model.data
+        state.StockList = model.data.list
         break
       case 'err':
         alert(model.msg)
@@ -128,22 +143,12 @@ const mutations = {
   },
   [types.StockAddGet](state) {
     state.Stock = {}
-    return state.Stock
+    state.StockDtList = []
   },
   [types.StockAddPost](state, { model, rootState }) {
     switch (model.statu) {
       case 'ok':
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>新增成功!</h4>'
-        }).show()
+        noty.TopRightShow('新增成功!')
         rootState.isAdd = false
         state.StockList = model.data
         break
@@ -155,18 +160,25 @@ const mutations = {
   [types.StockDelete](state, model) {
     switch (model.statu) {
       case 'ok':
-        state.StockList = model.data
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>刪除成功!</h4>'
-        }).show()
+        state.StockList = model.data.list
+        noty.TopRightShow('刪除成功!')
+        break
+      case 'err':
+        alert(model.msg)
+        break
+    }
+  },
+  [types.StockdtAddGet](state) {
+    state.Stockdt = {}
+    return state.Stockdt
+  },
+  [types.StockdtEditGet](state) {
+    return state.Stockdt
+  },
+  [types.StockdtDelete](state, model) {
+    switch (model.statu) {
+      case 'ok':
+        state.StockDtList = model.data
         break
       case 'err':
         alert(model.msg)

@@ -1,5 +1,5 @@
 import types from './SupplierTypes'
-import Noty from 'noty'
+import { noty } from '../../../assets/commons'
 
 const state = {
   SupplierList: [],
@@ -107,19 +107,10 @@ const mutations = {
   [types.SupplierEditPut](state, { model, rootState }) {
     switch (model.statu) {
       case 'ok':
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>修改成功!</h4>'
-        }).show()
+        noty.TopRightShow('修改成功!')
         rootState.isAdd = false
-        state.SupplierList = model.data
+        state.SupplierList = model.data.list
+        state.SupplierPageCount = model.data.PageCount
         break
       case 'err':
         alert(model.msg)
@@ -133,50 +124,22 @@ const mutations = {
   [types.SupplierAddPost](state, { model, rootState }) {
     switch (model.statu) {
       case 'ok':
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>新增成功!</h4>'
-        }).show()
+        noty.TopRightShow('新增成功!')
         rootState.isAdd = false
-        state.SupplierList = model.data
+        state.SupplierList = model.data.list
+        state.SupplierPageCount = model.data.PageCount
         break
       case 'err':
-        new Noty({
-          type: 'warning',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: `<div style="width:500px">${model.msg}</div>`
-        }).show()
+        alert(model.msg)
         break
     }
   },
   [types.SupplierDelete](state, model) {
     switch (model.statu) {
       case 'ok':
-        state.SupplierList = model.data
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>刪除成功!</h4>'
-        }).show()
+        noty.TopRightShow('刪除成功!')
+        state.SupplierList = model.data.list
+        state.SupplierPageCount = model.data.PageCount
         break
       case 'err':
         alert(model.msg)

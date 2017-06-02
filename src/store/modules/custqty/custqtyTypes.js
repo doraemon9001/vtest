@@ -8,5 +8,6 @@ export default {
   CustQtyDelete: 'CustQtyDelete',
   GetCustQtyList: 'GetCustQtyList',
   GetCustQtyDtList: 'GetCustQtyDtList',
-  GetCustQty: 'GetCustQty'
+  GetCustQty: 'GetCustQty',
+  GetCustQtyPageCount: 'GetCustQtyPageCount'
 }

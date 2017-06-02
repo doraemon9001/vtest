@@ -19,6 +19,7 @@ import header from './modules/header'
 import request from './modules/request'
 import rece from './modules/rece'
 import pay from './modules/pay'
+import goods from './modules/goods'
 import stock from './modules/stock'
 import stockreturn from './modules/stockreturn'
 
@@ -36,6 +37,7 @@ export default new Vuex.Store({
     header,
     request,
     rece,
+    goods,
     pay,
     stock,
     stockreturn,

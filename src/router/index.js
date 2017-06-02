@@ -18,6 +18,7 @@ import Rece from '../components/rece.vue'
 import Pay from '../components/pay.vue'
 import Stock from '../components/stock.vue'
 import StockReturn from '../components/stockreturn.vue'
+import Goods from '../components/goods.vue'
 // import state from '../store/state'
 
 Vue.use(Router)
@@ -75,6 +76,13 @@ const router = new Router({
     {
       path: '/Request',
       component: Request,
+      meta: {
+        requiresAuth: true
+      }
+    },
+    {
+      path: '/Goods',
+      component: Goods,
       meta: {
         requiresAuth: true
       }

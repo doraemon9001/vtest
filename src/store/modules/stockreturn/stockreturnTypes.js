@@ -9,5 +9,10 @@ export default {
   GetStockReturnList: 'GetStockReturnList',
   GetStockReturnDtList: 'GetStockReturnDtList',
   GetStockReturn: 'GetStockReturn',
-  GetStockReturnPageCount: 'GetStockReturnPageCount'
+  GetStockReturndt: 'GetStockReturndt',
+  GetStockReturnPageCount: 'GetStockReturnPageCount',
+  StockReturndtAddGet: 'StockReturndtAddGet',
+  StockReturndtAddPost: 'StockReturndtAddPost',
+  StockReturndtEditGet: 'StockReturndtEditGet',
+  StockReturndtDelete: 'StockReturndtDelete'
 }

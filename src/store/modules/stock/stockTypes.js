@@ -9,5 +9,10 @@ export default {
   GetStockList: 'GetStockList',
   GetStockDtList: 'GetStockDtList',
   GetStock: 'GetStock',
-  GetStockPageCount: 'GetStockPageCount'
+  GetStockdt: 'GetStockdt',
+  GetStockPageCount: 'GetStockPageCount',
+  StockdtAddGet: 'StockdtAddGet',
+  StockdtAddPost: 'StockdtAddPost',
+  StockdtEditGet: 'StockdtEditGet',
+  StockdtDelete: 'StockdtDelete'
 }

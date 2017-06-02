@@ -269,183 +269,99 @@
             <div class="box-header">
               <h3>廠商 <button @click="add()" class="btn btn-info pull-right">新增</button></h3>
             </div>
-            <div class="box-body" >
+            <div class="box-body">
               <div class="box-group" id="accordion">
-                <div class="panel box box-primary" style="overflow:auto" v-for="(supplier,index) in GetSupplierList" v-if="index < 5">
-                  <div class="box-header with-border"style="min-width:4500px">
-                        <h4 class="pull-left">詳細資料<i class="fa fa-arrow-circle-down"></i></h4>
-                    <table class="table table-striped table-hover" data-parent="#accordion" :href="index|anchorHash">
+                <div class="panel box box-primary" v-for="(supplier,index) in GetSupplierList">
+                  <div class="box-header ">
+                    <table class="table table-striped " data-parent="#accordion" :href="index|anchorHash">
                       <tbody>
+                        <!-- 標題  -->
                         <tr>
-                          <th>廠商編號</th>
-                          <th>廠商名稱</th>
-                          <th>廠商簡稱</th>
-                          <th>公司地址郵遞區號</th>
-                          <th>公司地址</th>
-                          <th>工廠地址郵遞區號</th>
-                          <th>工廠地址</th>
-                          <th>發票地址郵遞區號</th>
-                          <th>發票地址</th>
-                          <th>公司電話</th>
-                          <th>公司傳真</th>
-                          <th>統一編號</th>
-                          <th>發票抬頭</th>
-                          <th>廠商等級</th>
-                          <th>負責人</th>
-                          <th>連絡人１</th>
-                          <th>連絡人１職稱</th>
-                          <th>連絡人１身份證號</th>
-                          <th>連絡人１生日</th>
-                          <th>連絡人１個人特質</th>
-                          <th>連絡人１連絡電話</th>
-                          <th>連絡人１電子信箱</th>
-                          <th>連絡人２</th>
-                          <th>連絡人２職稱</th>
-                          <th>連絡人２身份證號</th>
-                          <th>連絡人２生日</th>
-                          <th>連絡人２個人特質</th>
-                          <th>連絡人２連絡電話</th>
-                          <th>連絡人２電子信箱</th>
-                          <th>連絡事項</th>
-                          <th>營業項目</th>
-                          <th>資本額</th>
-                          <th>帳款額度</th>
-                          <th>信用額度</th>
-                          <th>付款方式</th>
-                          <th>折數</th>
-                          <th>使用折數</th>
-                          <th>銀行帳號</th>
-                          <th>銀行名稱</th>
-                          <th>帳款科目</th>
-                          <th>票據科目</th>
-                          <th>結帳日</th>
-                          <th>預付款</th>
-                          <th>未清款</th>
-                          <th>首次交易日</th>
-                          <th>最近交易日</th>
-                          <th>備註</th>
-                          <th>建檔人</th>
-                          <th>建檔時間</th>
-                          <th>異動人</th>
-                          <th>異動時間</th>
-                          <th>狀態</th>
+                          <th>
+                            <div class="col-md-6">
+                              <button @click="get(supplier.廠商編號)" class="btn btn-block btn-social btn-facebook"><i class="fa fa-edit"></i>修改</button>
+                            </div>
+                            <div class="col-md-6">
+                              <button @click="del(supplier.廠商編號)" class="btn btn-block btn-social btn-flickr"><i class="fa fa-times"></i>刪除</button>
+                            </div>
+                          </th>
                         </tr>
+                        <!-- 內容 -->
                         <tr>
-                          <td>{{supplier.廠商編號|isEmpty}}</td>
-                          <td>{{supplier.廠商名稱|isEmpty}}</td>
-                          <td>{{supplier.廠商簡稱|isEmpty}}</td>
-                          <td>{{supplier.公司地址郵遞區號|isEmpty}}</td>
-                          <td>{{supplier.公司地址|isEmpty}}</td>
-                          <td>{{supplier.工廠地址郵遞區號|isEmpty}}</td>
-                          <td>{{supplier.工廠地址|isEmpty}}</td>
-                          <td>{{supplier.發票地址郵遞區號|isEmpty}}</td>
-                          <td>{{supplier.發票地址|isEmpty}}</td>
-                          <td>{{supplier.公司電話|isEmpty}}</td>
-                          <td>{{supplier.公司傳真|isEmpty}}</td>
-                          <td>{{supplier.統一編號|isEmpty}}</td>
-                          <td>{{supplier.發票抬頭|isEmpty}}</td>
-                          <td>{{supplier.廠商等級|isEmpty}}</td>
-                          <td>{{supplier.負責人|isEmpty}}</td>
-                          <td>{{supplier.連絡人１|isEmpty}}</td>
-                          <td>{{supplier.連絡人１職稱|isEmpty}}</td>
-                          <td>{{supplier.連絡人１身份證號|isEmpty}}</td>
-                          <td>{{supplier.連絡人１生日|isEmpty}}</td>
-                          <td>{{supplier.連絡人１個人特質|isEmpty}}</td>
-                          <td>{{supplier.連絡人１連絡電話|isEmpty}}</td>
-                          <td>{{supplier.連絡人１電子信箱|isEmpty}}</td>
-                          <td>{{supplier.連絡人２|isEmpty}}</td>
-                          <td>{{supplier.連絡人２職稱|isEmpty}}</td>
-                          <td>{{supplier.連絡人２身份證號|isEmpty}}</td>
-                          <td>{{supplier.連絡人２生日|isEmpty}}</td>
-                          <td>{{supplier.連絡人２個人特質|isEmpty}}</td>
-                          <td>{{supplier.連絡人２連絡電話|isEmpty}}</td>
-                          <td>{{supplier.連絡人２電子信箱|isEmpty}}</td>
-                          <td>{{supplier.連絡事項|isEmpty}}</td>
-                          <td>{{supplier.營業項目|isEmpty}}</td>
-                          <td>{{supplier.資本額|isEmpty}}</td>
-                          <td>{{supplier.帳款額度|isEmpty}}</td>
-                          <td>{{supplier.信用額度|isEmpty}}</td>
-                          <td>{{supplier.付款方式|isEmpty}}</td>
-                          <td>{{supplier.折數|isEmpty}}</td>
-                          <td>{{supplier.使用折數|isEmpty}}</td>
-                          <td>{{supplier.銀行帳號|isEmpty}}</td>
-                          <td>{{supplier.銀行名稱|isEmpty}}</td>
-                          <td>{{supplier.帳款科目|isEmpty}}</td>
-                          <td>{{supplier.票據科目|isEmpty}}</td>
-                          <td>{{supplier.結帳日|isEmpty}}</td>
-                          <td>{{supplier.預付款|isEmpty}}</td>
-                          <td>{{supplier.未清款|isEmpty}}</td>
-                          <td>{{supplier.首次交易日|isEmpty}}</td>
-                          <td>{{supplier.最近交易日|isEmpty}}</td>
-                          <td>{{supplier.備註|isEmpty}}</td>
-                          <td>{{supplier.建檔人|isEmpty}}</td>
-                          <td>{{supplier.建檔時間|isEmpty}}</td>
-                          <td>{{supplier.異動人|isEmpty}}</td>
-                          <td>{{supplier.異動時間|isEmpty}}</td>
-                          <td>{{supplier.狀態|isEmpty}}</td>
+                          <td style="border:2px dashed #7bb4d5">
+                            <div class="col-md-3">
+                              <ul class="list-unstyled">
+                                <li><b>廠商編號</b> : {{supplier.廠商編號}}</li>
+                                <li><b>廠商名稱</b> : {{supplier.廠商名稱|isEmpty}}</li>
+                                <li><b>廠商簡稱</b> : {{supplier.廠商簡稱|isEmpty}}</li>
+                                <li><b>公司地址郵遞區號</b> : {{supplier.公司地址郵遞區號|isEmpty}}</li>
+                                <li><b>公司地址</b> : {{supplier.公司地址|isEmpty}}</li>
+                                <li><b>工廠地址郵遞區號</b> : {{supplier.工廠地址郵遞區號|isEmpty}}</li>
+                                <li><b>工廠地址</b> : {{supplier.工廠地址|isEmpty}}</li>
+                                <li><b>發票地址郵遞區號</b> : {{supplier.發票地址郵遞區號|isEmpty}}</li>
+                                <li><b>發票地址</b> : {{supplier.發票地址|isEmpty}}</li>
+                                <li><b>公司電話</b> : {{supplier.公司電話|isEmpty}}</li>
+                                <li><b>公司傳真</b> : {{supplier.公司傳真|isEmpty}}</li>
+                                <li><b>統一編號</b> : {{supplier.統一編號|isEmpty}}</li>
+                                <li><b>發票抬頭</b> : {{supplier.發票抬頭}}</li>
+                                <li><b>廠商等級</b> : {{supplier.廠商等級}}</li>
+                              </ul>
+                            </div>
+                            <div class="col-md-3">
+                              <ul class="list-unstyled">
+                                <li><b>連絡人１</b> : {{supplier.連絡人１|isEmpty}}</li>
+                                <li><b>連絡人１職稱</b> : {{supplier.連絡人１職稱|isEmpty}}</li>
+                                <li><b>連絡人１身份證號</b> : {{supplier.連絡人１身份證號|isEmpty}}</li>
+                                <li><b>連絡人１生日</b> : {{supplier.連絡人１生日|isEmpty}}</li>
+                                <li><b>連絡人１個人特質</b> : {{supplier.連絡人１個人特質|isEmpty}}</li>
+                                <li><b>連絡人１連絡電話</b> : {{supplier.連絡人１連絡電話|isEmpty}}</li>
+                                <li><b>連絡人１電子信箱</b> : {{supplier.連絡人１電子信箱|isEmpty}}</li>
+                                <li><b>連絡人２</b> : {{supplier.連絡人２|isEmpty}}</li>
+                                <li><b>連絡人２職稱</b> : {{supplier.連絡人２職稱|isEmpty}}</li>
+                                <li><b>連絡人２身份證號</b> : {{supplier.連絡人２身份證號|isEmpty}}</li>
+                                <li><b>連絡人２生日</b> : {{supplier.連絡人２生日|isEmpty}}</li>
+                                <li><b>連絡人２個人特質</b> : {{supplier.連絡人２個人特質|isEmpty}}</li>
+                                <li><b>連絡人２連絡電話</b> : {{supplier.連絡人２連絡電話|isEmpty}}</li>
+                                <li><b>連絡人２電子信箱</b> : {{supplier.連絡人２電子信箱|isEmpty}}</li>
+                              </ul>
+                            </div>
+                            <div class="col-md-3">
+                              <ul class="list-unstyled">
+                                <li><b>負責人</b> : {{supplier.負責人}}</li>
+                                <li><b>付款方式</b> : {{supplier.付款方式}}</li>
+                                <li><b>折數</b> : {{supplier.折數}}</li>
+                                <li><b>使用折數</b> : {{supplier.使用折數|isEmpty}}</li>
+                                <li><b>銀行帳號</b> : {{supplier.銀行帳號|isEmpty}}</li>
+                                <li><b>銀行名稱</b> : {{supplier.銀行名稱|isEmpty}}</li>
+                                <li><b>帳款科目</b> : {{supplier.帳款科目|isEmpty}}</li>
+                                <li><b>票據科目:</b> {{supplier.票據科目|isEmpty}}</li>
+                                <li><b>結帳日:</b> {{supplier.結帳日|isEmpty}}</li>
+                                <li><b>預收款: </b>{{supplier.預收款|isEmpty}}</li>
+                                <li><b>未清款:</b> {{supplier.未清款|isEmpty}}</li>
+                                <li><b>首次交易日:</b> {{supplier.首次交易日|isEmpty}}</li>
+                                <li><b>最近交易日:</b> {{supplier.最近交易日|isEmpty}}</li>
+                                <li><b>備註: </b>{{supplier.備註|isEmpty}}</li>
+                              </ul>
+                            </div>
+                            <div class="col-md-3">
+                              <ul class="list-unstyled">
+                                <li><b>合約起始日:</b> {{supplier.合約起始日|isEmpty}}</li>
+                                <li><b>連絡事項</b> : {{supplier.連絡事項|isEmpty}}</li>
+                                <li><b>營業項目</b> : {{supplier.營業項目|isEmpty}}</li>
+                                <li><b>資本額</b> : {{supplier.資本額|isEmpty}}</li>
+                                <li><b>帳款額度</b> : {{supplier.帳款額度|isEmpty}}</li>
+                                <li><b>信用額度</b> : {{supplier.信用額度|isEmpty}}</li>
+                                <li><b>建檔人: </b>{{supplier.建檔人|isEmpty}}</li>
+                                <li><b>建檔時間:</b> {{supplier.建檔時間|isEmpty}}</li>
+                                <li><b>異動人: </b>{{supplier.異動人|isEmpty}}</li>
+                                <li><b>異動時間: </b>{{supplier.異動時間|isEmpty}}</li>
+                                <li><b>狀態:</b> {{supplier.狀態|isEmpty}}</li>
+                              </ul>
+                            </div>
+                          </td>
                         </tr>
                       </tbody>
                     </table>
-                  </div>
-                  <div :id="index" class="panel-collapse collapse" style="min-width:3500px">
-                    <template v-if="GetSupplierDtList.length > 0" >
-                      <div class="box-body" :id="index" >
-                        <h4 class="pull-left">詳細資料<i class="fa fa-arrow-circle-down"></i></h4>
-                        <table class="table table-striped table-hover"  >
-                          <tbody>
-                            <tr>
-                              <th>
-                                <a :href="index|anchorHash" data-toggle="collapse" >關閉</a>
-                              </th>
-                              <th>單據日期</th>
-                              <th>單據編號</th>
-                              <th>貨品編號</th>
-                              <th>貨品名稱</th>
-                              <th>單價</th>
-                              <th>單位</th>
-                              <th>數量</th>
-                              <th>小計</th>
-                              <th>折數</th>
-                              <th>折讓</th>
-                              <th>寄庫量</th>
-                              <th>單位成本</th>
-                              <th>成本方式</th>
-                              <th>保固起始日</th>
-                              <th>保固終止日</th>
-                              <th>贈品</th>
-                              <th>使用包裝</th>
-                              <th>包裝數量</th>
-                              <th>備註</th>
-                              <th>經理成本</th>
-                              <th>業務成本</th>
-                              <th>合約編號</th>
-                              <th>廠牌</th>
-                              <th>車型</th>
-                              <th>年份</th>
-                              <th>規格</th>
-                              <th>業務折數</th>
-                              <th>贈品金額</th>
-                              <th>OrderCode</th>
-                              <th>補價數量</th>
-                              <th>補價金額</th>
-                              <th>補價合計</th>
-                              <th>重量</th>
-                              <th>扣抵</th>
-                              <th>自備車</th>
-                              <th>尺寸W</th>
-                              <th>尺寸H</th>
-                              <th>才數</th>
-                              <th>解析度</th>
-                              <th>冷錶</th>
-                              <th>匯率</th>
-                              <th>幣值</th>
-                              <th>幣值總額</th>
-                              <th>客戶編號</th>
-                            </tr>
-                          </tbody>
-                        </table>
-                      </div>
-                    </template>
                   </div>
                 </div>
               </div>
@@ -461,200 +377,165 @@
   </div>
 </template>
 <script>
-  import {
-    mapActions,
-    mapGetters,
-    mapState
-  } from 'vuex'
-  import Noty from 'noty'
-  export default {
-    data() {
-      return {
-        tcur: 1,
-        tall: 0,
-        supplierAdd: false
-      }
-    },
-    created() {
-      this.getPageData(1)
+import {
+  mapActions,
+  mapGetters,
+  mapState
+} from 'vuex'
+import {
+  noty
+} from '../assets/commons.js'
+export default {
+  data() {
+    return {
+      tcur: 1,
+      tall: 0,
+      supplierAdd: false
+    }
+  },
+  created() {
+    this.getPageData(1)
+  },
+  computed: {
+    ...mapState([
+      'ShowLoading',
+      'isAdd'
+    ]),
+    ...mapGetters([
+      'GetSupplierList',
+      'GetSupplierDtList',
+      'GetSupplier',
+      'GetSupplierPageCount'
+    ])
+  },
+  methods: {
+    ...mapActions([
+      'SupplierList',
+      'SupplierDtList',
+      'SupplierAddGet',
+      'SupplierAddPost',
+      'SupplierEditGet',
+      'SupplierEditPut',
+      'SupplierDelete',
+      'ShowDiv',
+      'HideDiv'
+    ]),
+    getPageData(page) {
+      this.SupplierList({
+        http: this.$http,
+        model: {
+          PageIndex: page,
+          PageSize: 5
+        }
+      })
       setTimeout(() => {
         this.tall = this.GetSupplierPageCount
+        this.tcur = page
       }, 2000)
     },
-    computed: {
-      ...mapState([
-        'ShowLoading',
-        'isAdd'
-      ]),
-      ...mapGetters([
-        'GetSupplierList',
-        'GetSupplierDtList',
-        'GetSupplier',
-        'GetSupplierPageCount'
-      ])
+    get(id) {
+      this.supplierAdd = false
+      this.SupplierEditGet({
+        http: this.$http,
+        id
+      })
+      this.ShowDiv()
     },
-    methods: {
-      ...mapActions([
-        'SupplierList',
-        'SupplierDtList',
-        'SupplierAddGet',
-        'SupplierAddPost',
-        'SupplierEditGet',
-        'SupplierEditPut',
-        'SupplierDelete',
-        'ShowDiv',
-        'HideDiv'
-      ]),
-      getPageData(page) {
-        this.SupplierList({
+    del(id) {
+      alert(this.tcur)
+      noty.Show('是否確定要刪除?', () => {
+        this.SupplierDelete({
           http: this.$http,
-          model: {
-            PageIndex: page,
-            PageSize: 5
-          }
+          id: id
         })
-      },
-      getdt(id) {
-        this.SupplierDtList({
+      })
+    },
+    add() {
+      this.supplierAdd = true
+      this.SupplierAddGet(this.$http)
+      this.ShowDiv()
+    },
+    doMethods(model) {
+      if (!this.supplierAdd) {
+        this.SupplierEditPut({
           http: this.$http,
-          id
+          model
         })
-      },
-      get(id) {
-        let self = this
-        let n = new Noty({
-          layout: 'topCenter',
-          theme: 'metroui',
-          closeWith: ['butto'],
-          text: `
-            <div style="width:200px;">
-              <div style="margin:20px;width:200px;"><h3>是否確定要修改?</h3></div>
-            </div>
-          `,
-          buttons: [
-            Noty.button('YES', 'btn btn-success', function () {
-              self.SupplierAdd = false
-              self.SupplierEditGet({
-                http: self.$http,
-                id
-              })
-              self.ShowDiv()
-              n.close()
-            }),
-            Noty.button('NO', 'btn btn-danger', function () {
-              this.SupplierAdd = false
-              n.close()
-            })
-          ]
-        }).show()
-      },
-      del(id) {
-        let self = this
-        let n = new Noty({
-          layout: 'topCenter',
-          theme: 'metroui',
-          closeWith: ['butto'],
-          text: `
-            <div style="width:200px;">
-              <div style="margin:20px;width:200px;"><h3>是否確定要刪除?</h3></div>
-            </div>
-          `,
-          buttons: [
-            Noty.button('YES', 'btn btn-success', function () {
-              self.SupplierDelete({
-                http: self.$http,
-                id: id
-              })
-              n.close()
-            }),
-            Noty.button('NO', 'btn btn-danger', function () {
-              n.close()
-            })
-          ]
-        }).show()
-      },
-      add() {
-        this.supplierAdd = true
-        this.SupplierAddGet(this.$http)
-        this.ShowDiv()
-      },
-      doMethods(model) {
-        this.GetSupplier.PageIndex = this.tcur
-        this.GetSupplier.PageSize = 5
-        if (!this.supplierAdd) {
-          this.SupplierEditPut({
-            http: this.$http,
-            model: model
-          })
-        } else {
-          this.SupplierAddPost({
-            http: this.$http,
-            model: model
-          })
-        }
+      } else {
+        this.SupplierAddPost({
+          http: this.$http,
+          model: model
+        })
       }
     }
   }
+}
 
 </script>
 <style scoped>
-  .margincenter {
-    width: 350px;
-    text-align: left;
-    margin: 0px auto;
-    font-size: 16px;
-  }
+ul>li {
+  text-align: left;
+  font-family: '微軟正黑體';
+  font-size: 16px;
+}
 
-  .myModal {
-    position: fixed;
-    /* Stay in place */
-    z-index: 778;
-    /* Sit on top */
-    padding-top: 100px;
-    /* Location of the box */
-    left: 0;
-    top: 0;
-    width: 100%;
-    /* Full width */
-    height: 100%;
-    /* Full height */
-    overflow: auto;
-    /* Enable scroll if needed */
-    background-color: rgb(0, 0, 0);
-    /* Fallback color */
-    background-color: rgba(0, 0, 0, 0.4);
-    /* Black w/ opacity */
-  }
+.margincenter {
+  width: 350px;
+  text-align: left;
+  margin: 0px auto;
+  font-size: 16px;
+}
 
-  .box-margin-left {
-    margin-left: 10px;
-  }
+.myModal {
+  position: fixed;
+  /* Stay in place */
+  z-index: 778;
+  /* Sit on top */
+  padding-top: 100px;
+  /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%;
+  /* Full width */
+  height: 100%;
+  /* Full height */
+  overflow: auto;
+  /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0);
+  /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4);
+  /* Black w/ opacity */
+}
 
-  .help {
-    display: block;
-    font-size: 11px;
-    margin-top: 5px;
-  }
+.box-margin-left {
+  margin-left: 10px;
+}
 
-  .help.is-danger {
-    background-color: #ff3860;
-    font-size: 18px;
-    font-weight: bold;
-    color: #34495e;
-    font-family: '微軟正黑體';
-  }
+.help {
+  display: block;
+  font-size: 11px;
+  margin-top: 5px;
+}
 
-  .input.is-danger,
-  .textarea.is-danger {
-    border: 1px solid #ff3860;
-  }
+.help.is-danger {
+  background-color: #ff3860;
+  font-size: 18px;
+  font-weight: bold;
+  color: #34495e;
+  font-family: '微軟正黑體';
+}
 
-  .even {
-    --background-color: #95da8b;
-  }
+.input.is-danger,
+.textarea.is-danger {
+  border: 1px solid #ff3860;
+}
 
-  .box-body {
-    --overflow: auto;
-  }
+.even {
+  --background-color: #95da8b;
+}
+
+.box-body {
+  --overflow: auto;
+}
 
 </style>

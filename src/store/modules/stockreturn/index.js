@@ -1,10 +1,11 @@
 import types from './stockreturnTypes'
-import Noty from 'noty'
+import { noty } from '../../../assets/commons'
 
 const state = {
   StockReturnList: [],
   StockReturnDtList: [],
   StockReturn: {},
+  StockReturnDt: {},
   StockReturnPageCount: 0
 }
 
@@ -12,6 +13,7 @@ const getters = {
   [types.GetStockReturnList]: (state) => state.StockReturnList,
   [types.GetStockReturnDtList]: (state) => state.StockReturnDtList,
   [types.GetStockReturn]: (state) => state.StockReturn,
+  [types.GetStockReturndt]: (state) => state.StockReturnDt,
   [types.GetStockReturnPageCount]: (state) => state.StockReturnPageCount
 }
 
@@ -41,11 +43,14 @@ const actions = {
       commit(types.StockReturnEditGet, model.data)
     })
   },
-  [types.StockReturnEditPut]({ commit, rootState }, { http, model }) {
+  [types.StockReturnEditPut]({ commit, rootState }, { http, model, dtModel }) {
     http({
       method: 'put',
-      url: `/api/StockReturn/Put/${model.員工編號}`,
-      data: model
+      url: `/api/StockReturn/Put/${model.單據編號}`,
+      data: {
+        Stock: model,
+        Stockdts: dtModel
+      }
     }).then(emp => {
       commit(types.StockReturnEditPut, { model: emp.data, rootState })
     })
@@ -68,6 +73,25 @@ const actions = {
       url: `/api/StockReturn/delete/${id}`
     }).then(model => {
       commit(types.StockReturnDelete, model.data)
+    })
+  },
+  [types.StockReturndtAddGet]({ commit }) {
+    commit(types.StockReturndtAddGet)
+  },
+  [types.StockReturndtEditGet]({ commit }, index) {
+    state.StockReturnDt = state.StockReturnDtList[index]
+    commit(types.StockReturndtEditGet)
+  },
+  [types.StockReturndtDelete]({ commit }, { http, formId, indexId }) {
+    http({
+      method: 'delete',
+      url: `/api/StockReturn/DeleteDt/${indexId}`,
+      data: {
+        單據編號: formId,
+        識別碼: indexId
+      }
+    }).then(model => {
+      commit(types.StockReturndtDelete, model.data)
     })
   }
 }
@@ -97,8 +121,9 @@ const mutations = {
   [types.StockReturnEditGet](state, model) {
     switch (model.statu) {
       case 'ok':
-        state.StockReturn = model.data
-        return state.StockReturn
+        state.StockReturn = model.data.stock
+        state.StockReturnDtList = model.data.stockDt
+        break
       case 'err':
         alert(model.msg)
         break
@@ -107,19 +132,9 @@ const mutations = {
   [types.StockReturnEditPut](state, { model, rootState }) {
     switch (model.statu) {
       case 'ok':
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>修改成功!</h4>'
-        }).show()
+        noty.TopRightShow('修改成功!')
         rootState.isAdd = false
-        state.StockReturnList = model.data
+        state.StockReturnList = model.data.list
         break
       case 'err':
         alert(model.msg)
@@ -128,22 +143,12 @@ const mutations = {
   },
   [types.StockReturnAddGet](state) {
     state.StockReturn = {}
-    return state.StockReturn
+    state.StockReturnDtList = []
   },
   [types.StockReturnAddPost](state, { model, rootState }) {
     switch (model.statu) {
       case 'ok':
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>新增成功!</h4>'
-        }).show()
+        noty.TopRightShow('新增成功!')
         rootState.isAdd = false
         state.StockReturnList = model.data
         break
@@ -155,18 +160,25 @@ const mutations = {
   [types.StockReturnDelete](state, model) {
     switch (model.statu) {
       case 'ok':
-        state.StockReturnList = model.data
-        new Noty({
-          type: 'info',
-          layout: 'topRight',
-          theme: 'metroui',
-          animation: {
-            open: 'noty_effects_open',
-            close: 'noty_effects_close'
-          },
-          timeout: 3000,
-          text: '<h4>刪除成功!</h4>'
-        }).show()
+        state.StockReturnList = model.data.list
+        noty.TopRightShow('刪除成功!')
+        break
+      case 'err':
+        alert(model.msg)
+        break
+    }
+  },
+  [types.StockReturndtAddGet](state) {
+    state.StockReturnDt = {}
+    return state.StockReturndt
+  },
+  [types.StockReturndtEditGet](state) {
+    return state.StockReturndt
+  },
+  [types.StockReturndtDelete](state, model) {
+    switch (model.statu) {
+      case 'ok':
+        state.StockReturnDtList = model.data
         break
       case 'err':
         alert(model.msg)

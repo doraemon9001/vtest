@@ -701,12 +701,12 @@ export default {
     },
     /* 單身資料點擊刪除 */
     dodtDel(index, formId, indexId) {
+      this.tempIndex = index // 點擊修改第幾個dt索引
       // 新增的刪除,直接從數組中移除即可
       if(indexId === undefined) {
         this.GetSaleDtList.splice(this.tempIndex, 1)
         return
       }
-      this.tempIndex = index // 點擊修改第幾個dt索引
       this.SaledtDelete({
         http: this.$http,
         formId,

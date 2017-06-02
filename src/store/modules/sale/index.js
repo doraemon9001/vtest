@@ -138,7 +138,7 @@ const mutations = {
       case 'ok':
         noty.TopRightShow('修改成功!')
         rootState.isAdd = false
-        state.SaleList = model.data
+        state.SaleList = model.data.list
         break
       case 'err':
         alert(model.msg)
